@@ -759,4 +759,144 @@ Dog barks
 
 ![image](https://github.com/user-attachments/assets/367df1d2-da1f-40b0-b1b7-a24350596410)
 
+## ✅ **Java String Interview Questions & Answers**
 
+----------
+
+### 1. **What is a String in Java?**
+
+> A `String` is an immutable sequence of characters. It is a class in `java.lang` package and represents text
+
+```
+String str = "Hello";
+
+```
+
+
+### 2. **Why are Strings immutable in Java?**
+
+> Once a `String` is created, it cannot be changed. This helps:
+
+-   String pooling
+    
+-   Thread-safety
+    
+-   Caching hash code
+    
+-   Security (e.g., in class loading, file paths)
+    
+
+----------
+
+### 3. **What is the difference between `==` and `.equals()` for Strings?**
+
+Operator
+
+Checks for
+
+`==`
+
+Reference (memory address) equality
+
+`.equals()`
+
+Content/value equality
+
+```
+String a = "hello";
+String b = new String("hello");
+System.out.println(a == b);       // false
+System.out.println(a.equals(b));  // true
+
+```
+
+### 4. **What is String Pool in Java?**
+
+> A special memory area in heap where Java stores **String literals** to save memory.
+```
+String a = "Java";
+String b = "Java";
+System.out.println(a == b); // true → both refer to same object in pool
+```
+### 5. **How to create a mutable String in Java?**
+
+> Use `StringBuilder` or `StringBuffer`.
+
+-   `StringBuilder` → faster, not thread-safe.
+    
+-   `StringBuffer` → slower, thread-safe.
+  
+6. **Difference between `StringBuilder` and `StringBuffer`?**
+
+![image](https://github.com/user-attachments/assets/a370b480-54c8-48e6-8c7d-f5e0db719e30)
+
+
+### 7. **Why should we use `StringBuilder` over `String` for string concatenation in loops?**
+
+> `String` is immutable, so every concat creates a new object.  
+> `StringBuilder` is mutable, hence more efficient.
+----------
+
+### 8. **How does `substring()` work internally in Java 8+?**
+
+> Creates a **new String** with a copy of the characters from the original. In Java 6–7, it used to share the same char array (causing memory leaks if not handled).
+
+----------
+
+### 9. **Is `String` thread-safe?**
+
+> ✅ Yes, because it's **immutable**. But operations like concatenation are **not atomic**.
+
+----------
+
+### 10. **Can we use `String` in switch statements?**
+
+> ✅ Yes, since Java 7.
+```
+String command = "start";
+switch (command) {
+  case "start": System.out.println("Started"); break;
+}
+```
+----------
+11. **Common String methods (and what they do)?**
+
+![image](https://github.com/user-attachments/assets/59e1cb40-d597-4b59-96d4-62f6b78b4927)
+
+
+### 12. **How to convert:**
+
+-   `String` → `int`: `Integer.parseInt(str)`
+    
+-   `int` → `String`: `String.valueOf(num)`
+    
+-   `String` → `char[]`: `str.toCharArray()`
+    
+-   `char[]` → `String`: `new String(charArray)`
+--------
+### 13. **How is memory managed for Strings in Java?**
+
+-   **String literals** go into **String Pool**.
+    
+-   `new String("Java")` creates a new object in the heap, **not pooled** unless interned.
+    
+-   Use `str.intern()` to move string to pool.
+--------
+### 14. **What is `intern()` method in String?**
+
+> `intern()` returns the canonical representation from the String pool.
+```
+String s1 = new String("Java").intern();
+String s2 = "Java";
+System.out.println(s1 == s2); // true
+```
+
+15. **Write a program to count number of occurrences of a character in a String.**
+```
+String input = "java";
+char target = 'a';
+long count = input.chars().filter(ch -> ch == target).count();
+System.out.println(count);  // Output: 2
+
+```
+--------

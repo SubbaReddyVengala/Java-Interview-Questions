@@ -1170,3 +1170,177 @@ The `synchronized` keyword in Java works by using **intrinsic locks (also known 
 Imagine a **toilet stall with a lock** (monitor). When one person (thread) enters and locks it, no one else can use it until it's unlocked (lock released).
 
 -----------------
+
+## ✅ **Java Collections – Interview Questions & Answers**
+
+----------
+
+### 📌 1. **What is the Java Collections Framework?**
+
+🧠 It’s a **unified architecture** to store, retrieve, and manipulate groups of objects efficiently. Located in `java.util` package.
+
+----------
+
+### 📌 2. **What is the difference between Collection and Collections?**
+
+![image](https://github.com/user-attachments/assets/d5d0ce85-1898-4c07-a90f-c2043dea1c54)
+
+----------
+
+📌 3. **What is the difference between List, Set, and Map?**
+![image](https://github.com/user-attachments/assets/1f99a3d0-d8a5-4c8a-b043-7f74ca7036b3)
+
+----------
+
+📌 5. **HashSet vs TreeSet vs LinkedHashSet?**
+
+![image](https://github.com/user-attachments/assets/39c7e767-ea1a-44fa-bb54-23bd0437e5e2)
+
+----------
+
+📌 6. **HashMap vs Hashtable?**
+
+![image](https://github.com/user-attachments/assets/542ee348-3c0e-43f4-b77f-3420c80c70b8)
+
+----------
+
+### 📌 7. **What is ConcurrentHashMap?**
+
+🧠 A thread-safe alternative to HashMap with better performance than `Hashtable`. It divides the map into **segments** (Java 7) or **bucket-level locking** (Java 8).
+
+🧠 **ConcurrentHashMap** is a **thread-safe**, high-performance alternative to `HashMap` used in multithreaded environments. It allows **concurrent read and controlled write access** without locking the entire map.
+
+### 🏦 **Analogy: Bank Lockers System**
+
+
+### 📍 **HashMap** – _No Security System_
+
+-   Anyone can access any locker at any time.
+    
+-   No security checks.
+    
+-   If two customers access the **same locker at the same time**, they might **lose or overwrite** each other's items.
+    
+
+🧠 Unsafe — just like HashMap is **not thread-safe**.
+
+----------
+
+### 📍 **Hashtable** – _One Guard for All Lockers_
+
+-   Only **one customer allowed** in the locker room at a time.
+    
+-   The guard stops everyone else — even if they need different lockers.
+    
+-   It's **safe**, but **slow** because of the **strict one-at-a-time rule**.
+    
+
+🧠 Thread-safe but **inefficient under heavy load**.
+
+----------
+
+### 📍 **ConcurrentHashMap** – _One Guard per Locker_
+
+-   Each locker has its **own security guard**.
+    
+-   Multiple customers can access **different lockers simultaneously**.
+    
+-   But if two people try to access **the same locker**, the guard ensures **one goes at a time**.
+    
+-   This system is **secure and very efficient**.
+    
+
+🧠 Thread-safe and **highly performant** — this is how **ConcurrentHashMap** works.
+
+----------
+
+### 🔁 Real-World Comparison Table:
+
+![image](https://github.com/user-attachments/assets/3e82188b-ff59-414b-bc95-a37c8e7d35dc)
+
+![image](https://github.com/user-attachments/assets/5fc0129e-8fc1-4441-a7b7-4796c0f1045f)
+
+## 🧪 Step-by-Step Thread Example
+
+### ✅ Safe Version using `ConcurrentHashMap`
+
+(Let's focus on the **good one** first)
+```
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ConcurrentMapDemo {
+
+    public static void main(String[] args) {
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+
+        // Thread 1: Add names
+        Thread writer1 = new Thread(() -> {
+            map.put("1", "Subba");
+            sleep(500); // Simulate delay
+            map.put("2", "Reddy");
+        });
+
+        // Thread 2: Add more names
+        Thread writer2 = new Thread(() -> {
+            map.put("3", "John");
+            sleep(500); // Simulate delay
+            map.put("4", "Doe");
+        });
+
+        // Thread 3: Read map while others are writing
+        Thread reader = new Thread(() -> {
+            sleep(200); // Wait a bit
+            System.out.println("Reader sees: " + map);
+            sleep(500);
+            System.out.println("Reader sees again: " + map);
+        });
+
+        // Start all threads
+        writer1.start();
+        writer2.start();
+        reader.start();
+    }
+
+    private static void sleep(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ignored) {}
+    }
+}
+```
+🔍 Output Explanation (May Vary):
+```
+Reader sees: {1=Subba, 3=John}
+Reader sees again: {1=Subba, 2=Reddy, 3=John, 4=Doe}
+```
+✅ As you can see:
+
+-   All updates go smoothly.
+    
+-   The reader never crashes.
+    
+-   No data is lost
+
+❌ If You Replace `ConcurrentHashMap` with `HashMap`:
+
+```
+Map<String, String> map = new HashMap<>();
+```
+Then run the same program.
+
+🔴 You may see:
+
+-   `ConcurrentModificationException`
+    
+-   Incomplete map values
+    
+-   Unexpected behavior
+  
+### 💡 Moral of the Code Story:
+
+`ConcurrentHashMap` = many users can **write and read at the same time** safely.  
+`HashMap` = not safe if multiple threads touch it **at the same time**.
+
+![Generated image](https://sdmntprwestus2.oaiusercontent.com/files/00000000-6a00-61f8-8e19-c1896a1bcb61/raw?se=2025-04-20T17%3A57%3A18Z&sp=r&sv=2024-08-04&sr=b&scid=88e528cc-950b-5a41-9fa3-2b9f30d07f2a&skoid=a3336399-497e-45e5-8f28-4b88ecca3d1f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-19T18%3A28%3A25Z&ske=2025-04-20T18%3A28%3A25Z&sks=b&skv=2024-08-04&sig=tqD%2BhoWPmEv6%2BQUZJIz33XiVDJ8neDGfKcUGpRhmxxw%3D)
+
+

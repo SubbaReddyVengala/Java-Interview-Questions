@@ -296,3 +296,413 @@ CopyEdit
 **Answer:**
 
 > No, `@Transactional` does **not work on private methods** because Spring uses **proxies**, and private methods cannot be intercepted
+
+# Microservices
+
+## ✅ **1. What are Microservices?**
+
+**Answer:**
+
+> Microservices is an architectural style where an application is **broken into small, independent services**, each responsible for a specific business function.  
+> These services **communicate via APIs (usually REST or messaging systems like Kafka)** and are **independently deployable and scalable**.
+
+----------
+
+## ✅ **2. What are the main benefits of Microservices?**
+
+**Answer:**
+
+-   **Scalability** – Scale individual components independently.
+    
+-   **Flexibility in Tech Stack** – Each service can use a different language/tech.
+    
+-   **Independent Deployment** – Less risk while deploying changes.
+    
+-   **Resilience** – One service failure doesn't crash the entire app.
+    
+-   **Faster Development** – Small teams can work in parallel on different services.
+    
+
+----------
+
+## ✅ **3. What are some challenges in Microservices?**
+
+**Answer:**
+
+-   **Distributed system complexity**
+    
+-   **Data consistency**
+    
+-   **Service discovery and communication**
+    
+-   **Centralized logging and monitoring**
+    
+-   **Security across services**
+    
+
+----------
+
+## ✅ **4. How do Microservices communicate with each other?**
+
+**Answer:**
+
+> Services can communicate using:
+
+-   **Synchronous** protocols like **REST (HTTP)** or **gRPC**.
+    
+-   **Asynchronous** protocols using **messaging queues** (e.g., **Kafka**, **RabbitMQ**).
+    
+
+----------
+
+## ✅ **5. What is Service Discovery?**
+
+**Answer:**
+
+> In microservices, services are dynamic (scale up/down), so **Service Discovery** allows services to register themselves and discover each other.  
+> Tools: **Eureka (Netflix OSS)**, **Consul**, **Zookeeper**.
+
+----------
+
+## ✅ **6. How do you handle API Gateway in Microservices?**
+
+**Answer:**
+
+> API Gateway is a single entry point for clients to interact with multiple services.  
+> It handles:
+
+-   Request routing
+    
+-   Authentication & authorization
+    
+-   Rate limiting
+    
+-   Logging and monitoring
+    
+
+📌 Example: **Spring Cloud Gateway**, **Kong**, **Zuul**
+
+----------
+
+## ✅ **7. How do you manage configuration in Microservices?**
+
+**Answer:**
+
+> Use a **centralized configuration server**, like **Spring Cloud Config**, to manage configs across services.  
+> This avoids hardcoding values and enables dynamic updates.
+
+----------
+
+## ✅ **8. How do you ensure fault tolerance in Microservices?**
+
+**Answer:**
+
+> Tools and techniques:
+
+-   **Circuit Breaker** (e.g., Resilience4j, Hystrix)
+    
+-   **Retry and Timeout**
+    
+-   **Fallback methods**
+    
+-   **Bulkheads and Rate Limiting**
+    
+
+----------
+
+## ✅ **9. How is data handled in Microservices?**
+
+**Answer:**
+
+> Each microservice has its **own database** (Database per service pattern) to ensure loose coupling and data ownership.  
+> Data consistency is handled via **eventual consistency**, not transactions.
+
+----------
+
+## ✅ **10. How do you monitor Microservices?**
+
+**Answer:**
+
+> Use Observability tools like:
+
+-   **Micrometer** for metrics
+    
+-   **Prometheus + Grafana** for monitoring
+    
+-   **ELK Stack / Splunk** for logs
+
+- **Zipkin / Jaeger** for distributed tracing
+  
+# ✅ Java 8
+
+
+### 🔹 **1. What are the main features introduced in Java 8?**
+
+**Answer:**
+
+-   **Lambda Expressions**
+    
+-   **Functional Interfaces**
+    
+-   **Stream API**
+    
+-   **Default and Static Methods in Interfaces**
+    
+-   **Optional Class**
+    
+-   **Date and Time API (java.time)**
+    
+-   **Collectors and enhanced Map operations**
+    
+-   **Method References and Constructor References**
+    
+-   **Parallel Streams**
+    
+-   **Nashorn JavaScript Engine (removed in Java 15)**
+    
+
+----------
+
+### 🔹 **2. What is a Lambda Expression?**
+
+**Answer:**
+
+> A Lambda expression is an anonymous function that allows passing behavior as data.  
+> It’s mainly used to implement functional interfaces in a concise way.
+```
+`(int a, int b) -> a + b` 
+```
+----------
+
+### 🔹 **3. What is a Functional Interface?**
+
+**Answer:**
+
+> An interface with exactly **one abstract method** is called a functional interface.
+
+Examples:
+
+-   `Runnable`
+    
+-   `Callable`
+    
+-   `Comparator`
+    
+-   `Function<T, R>`
+    
+-   `Predicate<T>`
+    
+```
+`@FunctionalInterface  public  interface  MyInterface { void  test();
+}
+```
+----------
+
+### 🔹 **4. What is the Stream API?**
+
+**Answer:**
+
+> Stream API is used to **process collections in a functional and declarative way**, using operations like `filter`, `map`, `reduce`, `collect`, etc.
+```
+`List<String> names = list.stream()
+                         .filter(s -> s.startsWith("A"))
+                         .collect(Collectors.toList());` 
+```
+----------
+
+### 🔹 **5. Difference between map() and flatMap()?**
+
+**Answer:**
+
+Feature
+
+`map()`
+
+`flatMap()`
+
+Output
+
+Stream of elements
+
+Flattened Stream
+
+Use case
+
+Transform each element
+
+Flatten nested structure
+```
+
+`list.stream().map(String::toUpperCase)
+list.stream().flatMap(List::stream)` 
+```
+----------
+
+### 🔹 **6. What are Intermediate and Terminal operations in Streams?**
+
+**Answer:**
+
+-   **Intermediate**: Returns another stream → `map()`, `filter()`, `sorted()`
+    
+-   **Terminal**: Produces result → `collect()`, `count()`, `forEach()`
+    
+
+----------
+
+### 🔹 **7. What are Collectors? Give examples.**
+
+**Answer:** `Collectors` is a utility class used with streams for reducing data.
+
+Examples:
+
+-   `toList()`
+    
+-   `toSet()`
+    
+-   `groupingBy()`
+    
+-   `partitioningBy()`
+    
+-   `joining()`
+    
+-   `summarizingInt()`
+    
+-   `counting()`
+    
+```
+
+list.stream().collect(Collectors.groupingBy(String::length))` 
+```
+----------
+
+### 🔹 **8. What is Optional in Java 8?**
+
+**Answer:** `Optional<T>` is a container object which may or may not contain a non-null value.  
+It helps **avoid null checks and NullPointerExceptions**.
+
+
+
+
+`Optional<String> name = Optional.of("Subba");
+name.ifPresent(System.out::println);` 
+
+----------
+
+### 🔹 **9. Difference between orElse(), orElseGet(), and orElseThrow()?**
+
+**Answer:**
+
+-   `orElse(value)` → always evaluates the value
+    
+-   `orElseGet(Supplier)` → evaluates only when Optional is empty
+    
+-   `orElseThrow()` → throws exception if value is missing
+    
+
+----------
+
+### 🔹 **10. What are Default and Static Methods in Interfaces?**
+
+**Answer:**
+
+> Java 8 allows us to add methods with **implementation** in interfaces using `default` or `static`.
+
+
+`default  void  log() {
+    System.out.println("logging...");
+} static  void  print() {
+    System.out.println("printing...");
+}` 
+
+----------
+
+### 🔹 **11. Can two interfaces have the same default method?**
+
+**Answer:**
+
+> Yes, but if a class implements both, it must override the method to resolve the conflict.
+
+----------
+
+### 🔹 **12. What are Method References?**
+
+**Answer:**
+
+> A shorter syntax for calling existing methods using `::`.
+
+
+`list.forEach(System.out::println); // Static list.stream().map(String::toUpperCase); // Instance method` 
+
+----------
+
+### 🔹 **13. What is the new Date and Time API in Java 8?**
+
+**Answer:**
+
+> Java 8 introduced `java.time` package to replace `java.util.Date`.
+
+Classes:
+
+-   `LocalDate`
+    
+-   `LocalTime`
+    
+-   `LocalDateTime`
+    
+-   `ZonedDateTime`
+    
+-   `Period`, `Duration`
+    
+
+
+`LocalDate  now  = LocalDate.now();` 
+
+----------
+
+### 🔹 **14. What is the use of `Predicate`, `Function`, `Consumer`, and `Supplier`?**
+
+**Answer:**
+
+Interface
+
+Method
+
+Purpose
+
+Predicate<T>
+
+test()
+
+Takes T, returns boolean
+
+Function<T,R>
+
+apply()
+
+Takes T, returns R
+
+Consumer<T>
+
+accept()
+
+Takes T, returns nothing
+
+Supplier<T>
+
+get()
+
+Takes nothing, returns T
+
+----------
+
+### 🔹 **15. How do you sort a list using Streams and Lambda?**
+
+**Answer:**
+
+`list.stream()
+    .sorted((s1, s2) -> s1.compareTo(s2))
+    .collect(Collectors.toList());` 
+
+Or use method reference:
+
+`list.stream().sorted(Comparator.naturalOrder())`

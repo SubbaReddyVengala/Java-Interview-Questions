@@ -706,3 +706,57 @@ Takes nothing, returns T
 Or use method reference:
 
 `list.stream().sorted(Comparator.naturalOrder())`
+
+## ✅ **What is Garbage Collection in Java?**
+
+**Answer:**
+
+> **Garbage Collection (GC)** in Java is the **automatic process of identifying and reclaiming memory** used by objects that are **no longer reachable or needed**, to **free up heap memory**.
+
+Java uses **automatic garbage collection**, so developers don't need to manually deallocate memory (unlike C/C++).
+
+### 🔹 Interview Tip:
+
+> "Garbage Collection is key to Java's memory management. It boosts performance, avoids memory leaks, and allows developers to focus on writing logic instead of worrying about memory cleanup."
+
+
+## ✅ What is **Dynamic Binding** in Java?
+
+> **Dynamic Binding** (also called **Late Binding**) means that the **method call is resolved at runtime** rather than compile time.
+
+
+### 🔹 When does it happen?
+
+-   Occurs with **method overriding** (not overloading).
+    
+-   Applies to **instance methods**, not static, private, or final methods.
+
+```
+class Animal {
+    void sound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Animal a = new Dog();  // Upcasting
+        a.sound();  // Dynamic Binding
+    }
+}
+```
+🔸 Output:
+```
+Dog barks
+```
+🔍 Although the reference type is Animal, the actual object is a Dog, so the Dog's sound() method is executed at runtime.
+
+![image](https://github.com/user-attachments/assets/367df1d2-da1f-40b0-b1b7-a24350596410)
+
+

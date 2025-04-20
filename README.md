@@ -900,3 +900,273 @@ System.out.println(count);  // Output: 2
 
 ```
 --------
+
+## ✅ **Multithreading in Java – Interview Questions & Answers**
+
+----------
+
+### 1. **What is multithreading in Java?**
+
+> Multithreading is a process of executing **multiple threads simultaneously** to maximize CPU utilization and improve performance in concurrent programs.
+
+----------
+
+### 2. **What is the difference between a process and a thread?**
+![image](https://github.com/user-attachments/assets/eafe128e-4849-4703-bddd-46025698db88)
+
+----------
+
+### 3. **How to create a thread in Java?**
+
+✅ **Two ways:**
+```
+// 1. Extend Thread
+class MyThread extends Thread {
+    public void run() {
+        System.out.println("Thread running...");
+    }
+}
+
+// 2. Implement Runnable
+class MyRunnable implements Runnable {
+    public void run() {
+        System.out.println("Runnable running...");
+    }
+}
+
+```
+Then:
+```
+new MyThread().start();
+new Thread(new MyRunnable()).start();
+
+```
+----------
+### 4. **What is the lifecycle of a thread?**
+
+-   New
+    
+-   Runnable
+    
+-   Running
+    
+-   Blocked/Waiting
+    
+-   Terminated
+----------
+5. **What is the difference between `start()` and `run()` method?**
+
+![image](https://github.com/user-attachments/assets/c21dd21b-fc03-4f22-9ecb-5ff381bfba5a)
+
+## Example to Clarify:
+```
+class MyThread extends Thread {
+    public void run() {
+        System.out.println("Running in a new thread");
+    }
+}
+
+public class ThreadExample {
+    public static void main(String[] args) {
+        MyThread thread = new MyThread();
+
+        thread.run();   // Runs in the main thread, no new thread is created
+        thread.start(); // Creates a new thread and calls run() in that thread
+    }
+}
+```
+Output:
+```
+Running in a new thread    // (when start() is used)
+Running in a new thread    // (when run() is directly called in the main thread)
+
+```
+----------
+### 6. **What is thread synchronization?**
+
+> Synchronization is used to **control access to shared resources** by multiple threads to prevent data inconsistency or race conditions.
+```
+synchronized void print() {
+    // Only one thread can access this at a time
+}
+```
+### 🔐 **Why is synchronization needed?**
+
+When two or more threads try to modify the same resource simultaneously, it can lead to:
+
+-   Corrupted data
+    
+-   Unexpected behavior
+    
+-   Bugs that are hard to reproduce
+  
+## 💡 Real-Life Analogy:
+
+Think of a toilet in a public place (shared resource). Only one person (thread) can use it at a time, and others must wait until it's free — that’s synchronization!
+
+----------
+### 7. **What is a deadlock?**
+
+> Deadlock is a situation where two or more threads are **waiting for each other to release resources**, and none of them can proceed.
+--------
+
+8. **What is the difference between `synchronized method` and `synchronized block`?**
+   
+![image](https://github.com/user-attachments/assets/ce3b98e4-f785-4444-9fad-8f6064b311fb)
+
+--------
+
+
+
+--------
+
+### ✅ **What is the `volatile` keyword in Java?**
+
+**Answer:**  
+The `volatile` keyword in Java is used to **mark a variable as being stored in main memory**. When a variable is declared `volatile`, every **read** of that variable will be done **from main memory**, and every **write** will be immediately **written to main memory**. This ensures **visibility** of changes across threads.
+
+### 🔄 **Why is it needed?**
+
+In a multithreaded environment, threads may **cache variables locally**. Without `volatile`, one thread's updates **may not be visible** to others, leading to stale or inconsistent data.
+
+```
+class MyThread extends Thread {
+    volatile boolean running = true;
+
+    public void run() {
+        while (running) {
+            // do something
+        }
+    }
+
+    public void stopRunning() {
+        running = false; // change is immediately visible to other threads
+    }
+}
+```
+--------
+### 10. **What is the use of `join()` method?**
+
+> `join()` causes the current thread to **wait until another thread finishes execution**.
+--------
+### 11. **What is the use of `sleep()` method?**
+
+> Pauses the current thread for a specified time.
+```
+Thread.sleep(1000); // 1 second
+
+```
+--------
+
+### ✅ join() vs sleep() vs isAlive() in Java
+
+![image](https://github.com/user-attachments/assets/78e7ff24-cf17-4666-b325-db4ec0c50871)
+
+
+🔹 `join()` – Wait for another thread to finish
+```
+Thread t = new Thread(() -> {
+    System.out.println("Thread running...");
+});
+t.start();
+t.join();  // Main thread waits for t to finish
+```
+**Use case:** When thread A should wait for thread B to complete before proceeding.
+🔹 `sleep()` – Pause current thread
+```
+Thread.sleep(1000); // Pauses for 1 second
+```
+**Use case:** To simulate delay or wait before next action.
+
+🔹 `isAlive()` – Check thread status
+```
+Thread t = new Thread(() -> System.out.println("Run"));
+t.start();
+System.out.println(t.isAlive());  // true or false depending on state
+```
+**Use case:** Check if a thread is still running before taking action.
+## 🧠 **Quick Summary Flashcards**
+
+**📌 `join()`**  
+➡️ Waits for a thread to finish execution.
+
+**📌 `sleep()`**  
+➡️ Pauses current thread for a fixed time.
+
+**📌 `isAlive()`**  
+➡️ Returns true if thread has started and not yet finished.
+
+## 💡 Real-World Analogy
+
+-   🛑 `sleep()` → You take a nap — no one else is affected.
+    
+-   ⏳ `join()` → You wait for your friend to finish eating before leaving together.
+    
+-   🔍 `isAlive()` → You check if your friend is still at the table.
+
+----------
+
+## ✅ **12. What are Thread Priorities in Java?**
+
+**Answer:**  
+In Java, each thread has a **priority** ranging from **1 (MIN_PRIORITY)** to **10 (MAX_PRIORITY)**, with the **default being 5 (NORM_PRIORITY)**. The thread scheduler can use these priorities to decide the **order of thread execution** — threads with **higher priority may get more CPU time** than lower-priority ones. However, **priority-based scheduling is not guaranteed** as it is **JVM and OS dependent**.
+
+💡 Analogy:
+
+Imagine you’re in a queue, and someone has a VIP pass (priority 10) — they may get in earlier, but only if the bouncer (scheduler) decides to honor the pass.
+
+
+### 13. **What are Daemon threads?**
+
+> Threads that run in the background and die when all user threads finish.  
+> Example: Garbage Collector thread.
+> Daemon threads are **background threads** that provide **supportive services** to user threads. They run continuously **in the background** and are **terminated automatically** by the JVM **once all user (non-daemon) threads finish execution**.
+```
+thread.setDaemon(true);
+```
+### 🧠 **Key Points:**
+
+-   Daemon threads are **low-priority background workers**.
+    
+-   JVM **does not wait** for daemon threads to finish.
+    
+-   They are typically used for **housekeeping tasks**.
+    
+-   A thread can be marked as daemon **only before starting** it using `setDaemon(true)`.
+```
+public class DaemonExample {
+    public static void main(String[] args) {
+        Thread t = new Thread(() -> {
+            while (true) {
+                System.out.println("Daemon thread running...");
+                try { Thread.sleep(500); } catch (InterruptedException e) {}
+            }
+        });
+        t.setDaemon(true); // Must be set before start()
+        t.start();
+
+        System.out.println("Main thread finished.");
+    }
+}
+
+```
+**Output:**  
+"Daemon thread running..." (may or may not print depending on how fast main finishes)
+
+### 💡 Real-World Analogy:
+
+Think of a **janitor (daemon thread)** in an office who cleans up when everyone leaves. Once the main staff (user threads) go home, **he also stops working** — **even if cleanup isn’t done.**
+
+-------
+
+
+## ✅ **How does the `synchronized` keyword work internally in Java?**
+
+**Answer:**  
+The `synchronized` keyword in Java works by using **intrinsic locks (also known as monitors)** to control access to code blocks or methods. When a thread enters a `synchronized` block or method, it **acquires the monitor lock** associated with the object or class. Other threads are **blocked** until the lock is released.
+
+### 💡 Real-world Analogy:
+
+Imagine a **toilet stall with a lock** (monitor). When one person (thread) enters and locks it, no one else can use it until it's unlocked (lock released).
+
+-----------------

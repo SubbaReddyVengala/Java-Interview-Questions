@@ -1445,3 +1445,159 @@ public class FailSafeExample {
 ![image](https://github.com/user-attachments/assets/12e1fe7f-ff8c-4d25-8526-12f76a45a770)
 
 
+### **1. What is `CompletableFuture` in Java?**
+
+**Answer:** `CompletableFuture` is part of the **java.util.concurrent** package in Java 8 and represents an asynchronous computation. It allows you to run tasks asynchronously and perform operations like combining results, handling exceptions, and chaining tasks without blocking the main thread.
+
+It offers several methods to handle asynchronous programming, such as **`supplyAsync()`**, **`thenApply()`**, **`exceptionally()`**, and **`allOf()`**, among others. It is an alternative to the older `Future` and `ExecutorService` APIs, with a more fluent and flexible API for async programming.
+
+----------
+
+### **2. What are the differences between `Future` and `CompletableFuture`?**
+
+**Answer:**
+
+-   **Completion**: `Future` is used to represent the result of an asynchronous computation and can be **retrieved** using methods like `get()` or `get(long, TimeUnit)`. It is primarily used to block and wait for the result.
+    
+    In contrast, `CompletableFuture` allows you to **complete the task manually** and provide ways to **chain** and **combine** multiple asynchronous tasks, enabling more advanced handling.
+    
+-   **Chaining**: `Future` does not support chaining of tasks directly, while `CompletableFuture` allows chaining with methods like `thenApply()`, `thenCompose()`, `thenCombine()`, etc.
+    
+-   **Error Handling**: `CompletableFuture` provides **better exception handling** using methods like `exceptionally()` or `handle()`. With `Future`, exception handling can be done only through `get()` and `ExecutionException`.
+    
+
+----------
+
+### **3. What are the key methods available in `CompletableFuture`?**
+
+**Answer:** Here are some of the key methods in `CompletableFuture`:
+
+-   **`supplyAsync()`**: Used to run a task asynchronously and return a `CompletableFuture` that holds the result.
+    
+-   **`runAsync()`**: Similar to `supplyAsync()`, but it does not return any result.
+    
+-   **`thenApply()`**: Transforms the result of the asynchronous task.
+    
+-   **`thenAccept()`**: Consumes the result without returning a new value.
+    
+-   **`exceptionally()`**: Handles exceptions if they occur during computation.
+    
+-   **`thenCombine()`**: Combines the result of two futures.
+    
+-   **`allOf()`**: Waits for all given futures to complete.
+    
+-   **`anyOf()`**: Waits for the first future to complete.
+  
+
+### ✅ **What is Spring Boot DevTools?**
+
+**Answer:** Spring Boot DevTools is a **developer-friendly tool** that provides features to **enhance the development experience** by enabling:
+
+-   **Auto-restart** of the application on code changes
+    
+-   **LiveReload** support for front-end updates
+    
+-   **Automatic property defaults** for development
+    
+-   **Faster development feedback loop**
+    
+
+----------
+
+### 💬 **Common Interview Questions & Answers**
+
+----------
+
+### 🔹 Q1. What are the key features of Spring Boot DevTools?
+
+**Answer:**
+
+-   🔁 **Automatic Restart**: Restarts the application when classes in the classpath change.
+    
+-   🌐 **LiveReload Integration**: Automatically refreshes the browser on HTML/CSS changes.
+    
+-   ⚙️ **Development-Time Configurations**: Enables dev-friendly settings (e.g., H2 console, disabling caching).
+    
+-   🛠 **Remote Debugging Support** (optional): Enables remote updates for deployed apps.
+    
+-   🧠 **Excluded Dependencies**: It automatically disables certain production-only behaviors.
+
+----------
+
+### 🔹 Q2. How do you add DevTools in a Spring Boot application?
+
+**Answer:** Add the following dependency to your `pom.xml`:
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <optional>true</optional> <!-- Ensures it's not included in final build -->
+</dependency>
+
+```
+### 🔹 Q3. Does DevTools work in production?
+
+**Answer:** **No**, DevTools is intended **only for development**. It is automatically **disabled in production environments**, and you can also exclude it using build tools like Maven or Gradle.
+
+----------
+
+### 🔹 Q4. How does auto-restart work in DevTools?
+
+**Answer:** Spring Boot DevTools uses **two classloaders**:
+
+-   **Base classloader**: For stable classes (e.g., libraries).
+    
+-   **Restart classloader**: For application classes that change during development.
+    
+
+When a class in the restart classloader changes, the application restarts **without reloading the entire JVM**, which is faster than a full restart.
+
+----------
+
+### 🔹 Q5. What types of files trigger a restart in DevTools?
+
+**Answer:** DevTools watches for changes in:
+
+-   `.class` files (Java class changes)
+    
+-   `application.properties` / `application.yml`
+    
+-   HTML, JS, and other static files (trigger **LiveReload**, not restart)
+    
+
+----------
+
+### 🔹 Q6. How can you disable automatic restart?
+
+**Answer:** You can disable it using:
+
+
+
+`spring.devtools.restart.enabled=false`
+
+### 🔹 Q7. What is LiveReload and how do you enable it?
+
+**Answer:** **LiveReload** refreshes the browser automatically when you change static resources like HTML or CSS.
+
+-   DevTools has a built-in LiveReload server on port `35729`.
+    
+-   To use it, install a **LiveReload browser extension** or use an IDE that supports it.
+    
+
+Enable/disable via:
+
+
+
+`spring.devtools.livereload.enabled=true`
+### 🔹 Q8. What are the advantages of using DevTools?
+
+**Answer:**
+
+-   Speeds up development cycle
+    
+-   Reduces manual restarts
+    
+-   Increases productivity
+    
+-   Helps in visual feedback for UI changes
+-   

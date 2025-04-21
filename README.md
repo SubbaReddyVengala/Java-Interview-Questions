@@ -1344,3 +1344,104 @@ Then run the same program.
 ![Generated image](https://sdmntprwestus2.oaiusercontent.com/files/00000000-6a00-61f8-8e19-c1896a1bcb61/raw?se=2025-04-20T17%3A57%3A18Z&sp=r&sv=2024-08-04&sr=b&scid=88e528cc-950b-5a41-9fa3-2b9f30d07f2a&skoid=a3336399-497e-45e5-8f28-4b88ecca3d1f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-19T18%3A28%3A25Z&ske=2025-04-20T18%3A28%3A25Z&sks=b&skv=2024-08-04&sig=tqD%2BhoWPmEv6%2BQUZJIz33XiVDJ8neDGfKcUGpRhmxxw%3D)
 
 
+1.  **HashMap Structure**:
+    
+    -   It stores key-value pairs in an array (called buckets).
+        
+    -   Each key gets a number (hash code) to decide where to store the pair.
+        
+2.  **Hashing**:
+    
+    -   When you add a key, Java turns it into a number using `hashCode()`.
+        
+    -   This number is used to pick a bucket (array index) for the key-value pair.
+        
+3.  **Handling Collisions**:
+    
+    -   If two keys have the same hash code (collision), they are stored in a list inside the same bucket.
+        
+    -   If the list gets too long, it changes to a tree for faster lookups.
+        
+4.  **Resizing**:
+    
+    -   If too many items are added (based on a setting called load factor), the `HashMap` grows, and everything is rehashed into a bigger array.
+        
+5.  **Operations**:
+    
+    -   **Add**: Calculate hash code, find bucket, store key-value pair.
+        
+    -   **Get**: Calculate hash code, find bucket, compare keys.
+        
+    -   **Performance**: Usually very fast (O(1)), but can slow down (O(n)) if too many collisions happen.
+        
+
+In short, `HashMap` uses a hash to quickly store and find key-value pairs, and it grows when needed.
+
+![Generated image](https://sdmntprwestus.oaiusercontent.com/files/00000000-4f68-6230-9420-28f30433b6aa/raw?se=2025-04-20T18%3A14%3A05Z&sp=r&sv=2024-08-04&sr=b&scid=b1bc13e9-9042-5b28-b53f-4deeab4b83f8&skoid=a3336399-497e-45e5-8f28-4b88ecca3d1f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-19T18%3A28%3A03Z&ske=2025-04-20T18%3A28%3A03Z&sks=b&skv=2024-08-04&sig=VJeiI%2BhuZPA4SSbIVFnvRf4mTpdetXdXOsXxG/72CGY%3D)
+
+Here is a visual explanation of how a HashMap works. It shows how a key goes through hashing to determine its index and how collisions are managed using separate chaining in the linked list inside a bucket.
+
+![image](https://github.com/user-attachments/assets/06281c83-38ca-4d76-b30a-b57d41365ec4)
+
+
+### 📌 8. **Why is Map not a part of Collection hierarchy?**
+
+🧠 Because Map works with **key-value pairs**, while `Collection` works with single elements.
+
+📌 9. **What is the fail-fast and fail-safe iterator**
+![image](https://github.com/user-attachments/assets/d80dd741-bcc2-47e7-be1f-79fe561abdb4)
+
+
+### ✅ **Fail-Fast Iterator Example**
+
+Modifying a collection while iterating leads to `ConcurrentModificationException`.
+```
+import java.util.*;
+
+public class FailFastExample {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("A");
+        list.add("B");
+
+        for (String s : list) {
+            if (s.equals("A")) {
+                list.remove(s); // ❌ Throws ConcurrentModificationException
+            }
+        }
+    }
+}
+
+```
+**Why?**  
+Because `ArrayList` is not designed for concurrent modification during iteration. It detects structural changes.
+### ✅ **Fail-Safe Iterator Example**
+
+Modifying is allowed without any exception — it works on a copy.
+```
+import java.util.concurrent.*;
+
+public class FailSafeExample {
+    public static void main(String[] args) {
+        CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+        list.add("A");
+        list.add("B");
+
+        for (String s : list) {
+            if (s.equals("A")) {
+                list.remove(s); // ✅ No Exception
+            }
+        }
+
+        System.out.println("Final List: " + list); // Output: [B]
+    }
+}
+
+```
+**Why?**  
+
+`CopyOnWriteArrayList` uses a copy of the list during iteration, so changes don't affect the iteration process.
+
+![image](https://github.com/user-attachments/assets/12e1fe7f-ff8c-4d25-8526-12f76a45a770)
+
+

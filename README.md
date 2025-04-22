@@ -1600,4 +1600,159 @@ Enable/disable via:
 -   Increases productivity
     
 -   Helps in visual feedback for UI changes
--   
+
+### ✅ **What is Caching?**
+
+**Answer:**  
+Caching is a technique used to **store frequently accessed data in memory** so that future requests for that data are served faster, reducing **database hits**, improving **application performance**, and saving **computation time**.
+
+### 🔹 **How do you enable caching in Spring Boot?**
+
+**Answer:**  
+To enable caching in Spring Boot:
+
+1.  Add the annotation:
+    
+    `@EnableCaching`
+-   in your main class or a configuration class.
+    
+-   Use the `@Cacheable` annotation on methods whose results should be cached:
+```
+@Cacheable("products")
+public Product getProductById(Long id) {
+    return productRepository.findById(id).orElseThrow();
+}
+```
+🔹 **What are the main caching annotations in Spring?**
+
+ ![image](https://github.com/user-attachments/assets/ff81448e-73fb-4eff-bf26-c0c967200a74)
+ 
+### ✅ **What is an Exception in Java?**
+
+**Answer:**  
+An **Exception** is an **event that disrupts the normal flow** of the program during runtime. It is an **object** representing an error.
+
+🧱 **Types of Exceptions in Java**
+![image](https://github.com/user-attachments/assets/78aa84a5-cd4a-432c-9d52-152456053681)
+
+🔹 **Exception Hierarchy**
+```
+Object
+  ↳ Throwable
+     ↳ Error (not handled)
+     ↳ Exception
+         ↳ Checked Exception (e.g., IOException)
+         ↳ Unchecked Exception (RuntimeException)
+
+```
+🔧 **Important Keywords**
+![image](https://github.com/user-attachments/assets/1edb9698-80ea-48ce-81c5-08da7c3dc153)
+#### 🔸 Q1. Difference between Checked and Unchecked exceptions?
+
+**Answer:**
+
+-   **Checked**: Must be handled or declared (e.g., `IOException`)
+    
+-   **Unchecked**: Not required to handle (e.g., `NullPointerException`)
+    
+
+----------
+
+#### 🔸 Q2. What is the purpose of the `finally` block?
+
+**Answer:**  
+Used to execute **cleanup code** like closing files, DB connections. Always runs, even if exception occurs or not.
+
+----------
+
+#### 🔸 Q3. What is the difference between `throw` and `throws`?
+
+![image](https://github.com/user-attachments/assets/64782902-267b-4188-96f3-e42404e4e841)
+
+
+## ✅ What is `@ExceptionHandler`?
+
+**`@ExceptionHandler`** is a Spring annotation used to handle **specific exceptions** thrown in your application. It helps in **customizing error responses** rather than returning stack traces.
+🔹 Basic Example: Local Exception Handling
+```
+@RestController
+public class UserController {
+
+    @GetMapping("/user/{id}")
+    public User getUser(@PathVariable int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Invalid user ID");
+        }
+        return new User(id, "Subba");
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body("Error: " + ex.getMessage());
+    }
+}
+
+```
+🎯 **Use-case:** Handles exceptions within this controller only.
+
+🔹 Global Exception Handling with `@RestControllerAdvice`
+```
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleAll(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                             .body("Unexpected error: " + ex.getMessage());
+    }
+}
+```
+🎯 **Use-case:** Handle exceptions **globally** across all controllers
+🔧 Best Practices
+### 🔸 Q1. Why use `@ExceptionHandler` instead of try-catch?
+
+**Answer:**
+
+-   Cleaner and centralized
+    
+-   Promotes separation of concerns
+    
+-   Easy to maintain and reuse
+    
+
+----------
+
+### 🔸 Q2. Difference between `@ControllerAdvice` and `@RestControllerAdvice`
+
+![image](https://github.com/user-attachments/assets/a8ecfa45-7e5e-4a59-849b-44047fa147d0)
+
+
+### 🔸 Q1. Why use `@ExceptionHandler` instead of try-catch?
+
+📦 **Analogy: Fire Alarm System in a Building**
+
+-   **Try-catch in every method** = Having a **fire extinguisher** in every single room and expecting everyone to use it manually during a fire.
+    
+-   **`@ExceptionHandler`** = Having a **central fire alarm and sprinkler system** that **automatically detects and handles the fire** for the entire building.
+    
+
+✅ Much safer, centralized, and doesn’t need to be duplicated in every room (or method).
+
+----------
+
+### 🔸 Q2. Difference between `@ControllerAdvice` and `@RestControllerAdvice`
+
+🎤 **Analogy: Two Spokespersons in a Company**
+
+-   **`@ControllerAdvice`** = A **spokesperson who talks to humans** (customers) — gives answers in **formal letters or printed documents** (HTML views).
+    
+-   **`@RestControllerAdvice`** = A **spokesperson who talks to systems/APIs** — gives answers in **code or JSON format**, which machines understand.
+    
+
+✅ Use `@ControllerAdvice` when dealing with webpages, and `@RestControllerAdvice` when building APIs that respond with data.
+

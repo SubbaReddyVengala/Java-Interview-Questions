@@ -1756,3 +1756,82 @@ public class GlobalExceptionHandler {
 
 ✅ Use `@ControllerAdvice` when dealing with webpages, and `@RestControllerAdvice` when building APIs that respond with data.
 
+
+## 📌 What are Wrapper Classes in Java?
+![image](https://github.com/user-attachments/assets/4303aefb-b21f-477b-9798-14bba75b1a17)
+
+**Wrapper classes** are used to **wrap primitive data types** (like `int`, `char`, `boolean`, etc.) into **objects**.
+## 🔍 Analogy: Wrapper Classes
+
+Think of a **gift box**:
+
+-   🎁 A **primitive type** is like a plain gift item (e.g., chocolate).
+    
+-   📦 A **wrapper class** is like the gift being **wrapped in a box** — now you can label it, pass it around, or store it safely.
+    
+
+✅ You can’t put raw chocolates in Amazon packaging — you need to **wrap** them. Similarly, Java collections only store **objects**, not primitives.
+
+## ✅ Why do we need Wrapper Classes?
+
+1.  **Collections (List, Set, Map)** can only store objects → not primitives  
+    Example: `List<int>` ❌ → `List<Integer>` ✅
+    
+2.  **Utility Methods**
+    
+    -   Wrapper classes provide helpful methods like `Integer.parseInt()`, `Boolean.valueOf()`.
+        
+3.  **Autoboxing and Unboxing**  
+```
+    Java automatically converts primitives ↔ wrapper types when needed.
+    int a = 10;
+Integer obj = a;         // autoboxing
+int b = obj;             // unboxing`
+```
+
+### 🔸 Q1. Why do we need wrapper classes if we already have primitives?
+
+**Answer:**  
+Because some Java APIs and data structures (like collections) **only work with objects**, not primitives. Wrapper classes let us use primitives in an object-oriented way.
+
+----------
+
+### 🔸 Q2. What is autoboxing and unboxing?
+
+**Answer:**
+
+-   **Autoboxing:** Automatically converting primitive → wrapper.  
+    `int x = 5; Integer obj = x;`
+    
+-   **Unboxing:** Automatically converting wrapper → primitive.  
+    `Integer obj = 5; int x = obj;`
+    
+
+----------
+
+### 🔸 Q3. Are wrapper objects immutable?
+
+**Answer:**  
+✅ Yes. All wrapper classes like `Integer`, `Double`, etc. are **immutable** just like `String`.
+
+----------
+
+### 🔸 Q4. Can wrapper objects be compared using `==`?
+
+**Answer:**
+
+-   Use `.equals()` for value comparison.
+    
+-   `==` checks reference, not value (unless cached values between -128 to 127 for `Integer`).
+    
+
+```
+Integer a = 100;
+Integer b = 100;
+System.out.println(a == b);      // true (due to caching)
+
+Integer c = 200;
+Integer d = 200;
+System.out.println(c == d);      // false
+
+```

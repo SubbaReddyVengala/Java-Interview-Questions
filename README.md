@@ -1845,3 +1845,165 @@ In Java, the `static` keyword means that **the member belongs to the class rathe
 ![image](https://github.com/user-attachments/assets/cbce934a-a1e8-4145-ac65-f163e87caaf9)
 
 
+🔍 Simple Example:
+```
+class Demo {
+    static int count = 0;  // Static variable
+
+    static void showCount() {   // Static method
+        System.out.println("Count: " + count);
+    }
+
+    static {    // Static block
+        System.out.println("Class Loaded");
+    }
+}
+
+```
+## 🧠 Real-life Analogy
+
+Think of a **static variable** like a **whiteboard in a classroom**:
+
+-   All students (objects) can **see and update** it.
+    
+-   But it's **shared**, not individual
+### 🔸 Q1. What is a static variable?
+
+**Answer:**  
+A variable shared among all instances of a class. Only one copy exists in memory.
+
+----------
+
+### 🔸 Q2. When would you use a static method?
+
+**Answer:**
+
+-   When the method does **not depend on instance variables**
+    
+-   For utility/helper methods like `Math.max()`, `Collections.sort()`
+    
+
+----------
+
+### 🔸 Q3. Can we override static methods?
+
+**Answer:**  
+❌ No, static methods belong to the class, not the object. They are **hidden**, not overridden.
+
+----------
+
+### 🔸 Q4. What is a static block?
+
+**Answer:**  
+A static block is executed **only once**, when the class is **first loaded**.
+```
+static {
+    // Initialization logic
+}
+```
+### 🔸 Q5. Can a class be static?
+
+**Answer:**  
+✅ Only **nested inner classes** can be declared static, not top-level classes.
+```
+class Outer {
+    static class Inner {
+        // Can access only static members of Outer
+    }
+}
+```
+## 📌 What are Access Modifiers in Java?
+
+Access modifiers define the **visibility/scope** of classes, variables, methods, and constructors.  
+
+There are **4 main access levels** in Java:
+
+![image](https://github.com/user-attachments/assets/97a9b5d8-41af-4dc0-a9ec-7a1babfced49)
+
+
+🔍 Access Modifiers Explained
+
+### 🔸 `private`
+
+-   Visible **only inside the class**
+    
+-   Used for **data hiding and encapsulation**
+```
+class BankAccount {
+    private double balance;
+}
+```
+### 🔸 _(default)_ (No keyword)
+
+-   Also called **package-private**
+    
+-   Accessible **within the same package**
+```
+class User {         // default access
+    int age;         // default variable
+}
+
+```
+### 🔸 `protected`
+
+-   Accessible within the **same package** and in **subclasses (even in other packages)**
+```
+class Animal {
+    protected void makeSound() {
+        System.out.println("Generic sound");
+    }
+}
+
+```
+### 🔸 `public`
+
+-   Accessible **from anywhere**
+```
+public class App {
+    public void start() {
+        System.out.println("Running app...");
+    }
+}
+```
+### 🔸 Q1. Which access modifier provides the most restricted access?
+
+**Answer:** `private` — accessible only within the class.
+
+----------
+
+### 🔸 Q2. What is the difference between `protected` and default?
+
+**Answer:**
+
+-   `protected` allows access in **subclasses outside the package**.
+    
+-   Default allows access **only within the same package**.
+    
+
+----------
+
+### 🔸 Q3. Can top-level classes be `private`?
+
+**Answer:** ❌ No, top-level classes can only be `public` or default.
+
+----------
+
+### 🔸 Q4. What’s the best practice for access modifiers?
+
+**Answer:**
+
+-   Use `private` for variables
+    
+-   Use `public` for methods that must be exposed
+    
+-   Use `protected` carefully in inheritance
+    
+-   Avoid default unless needed for package-level access
+  
+## 📘 Summary Cheat-Sheet:
+
+![image](https://github.com/user-attachments/assets/9bb69dd9-4681-4e1e-9815-3a5616fb6078)
+
+
+
+

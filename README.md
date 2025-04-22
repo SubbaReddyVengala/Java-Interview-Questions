@@ -1835,3 +1835,13 @@ Integer d = 200;
 System.out.println(c == d);      // false
 
 ```
+
+## 📌 What is `static` in Java?
+
+In Java, the `static` keyword means that **the member belongs to the class rather than to any instance of the class**.
+
+✅ Where can we use `static`?
+
+![image](https://github.com/user-attachments/assets/cbce934a-a1e8-4145-ac65-f163e87caaf9)
+
+

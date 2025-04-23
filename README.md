@@ -2112,5 +2112,6 @@ It ensures a configuration is only loaded if a specific class is present.
 
 Spring Boot behaves similarly: **it reads what you need and configures only that.**
 
+![image](https://github.com/user-attachments/assets/5f053678-f7f6-476f-b097-3017c4b3a7b8)
 
 
